@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  workflows: write
 
 jobs:
   sync:
@@ -30,7 +29,15 @@ jobs:
           git fetch upstream main
 
       - name: Merge upstream changes
-        run: git merge --no-edit upstream/main
+        run: |
+          # Merge upstream, but keep this fork's workflow files unchanged.
+          if git merge-base --is-ancestor upstream/main HEAD; then
+            echo "Upstream changes already merged"
+            exit 0
+          fi
+          git merge --no-commit --no-ff upstream/main
+          git restore --staged --worktree .github/workflows || true
+          git commit --no-edit
 
       - name: Push changes
         run: git push origin HEAD:main
