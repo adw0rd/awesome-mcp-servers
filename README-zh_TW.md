@@ -261,6 +261,7 @@ Web 內容訪問和自動化功能。支援以 AI 友好格式搜尋、抓取和
 - [davidan90/time-node-mcp](https://github.com/davidan90/time-node-mcp) 📇 🏠 - 支援時區的日期和時間操作，支援 IANA 時區、時區轉換和夏令時處理。
 - [endorhq/cli](https://github.com/endorhq/cli) 📇 ☁️ 🏠 🪟 🐧 🍎 - Endor 讓您的 AI 代理程式在隔離沙盒中執行 MariaDB、Postgres、Redis、Memcached、Alpine 或 Valkey 等服務。取得預先配置的應用程序，啟動時間不到 5 秒.
 - [jetbrains/mcpProxy](https://github.com/JetBrains/mcpProxy) 🎖️ 📇 🏠 - 連接到 JetBrains IDE
+- [Kapeli/dash-mcp-server](https://github.com/Kapeli/dash-mcp-server) [![Kapeli/dash-mcp-server MCP server](https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server) 🐍 🏠 🍎 - [Dash](https://kapeli.com/dash) 的 MCP 伺服器，macOS API 文件瀏覽器。即時搜尋超過 200 個文件集。
 - [tumf/mcp-text-editor](https://github.com/tumf/mcp-text-editor) 🐍 🏠 - 面向行的文本文件編輯器。針對 LLM 工具進行了最佳化，具有高效的部分文件訪問功能，可最大限度地減少令牌使用量。
 - [@joshuarileydev/simulator-mcp-server](https://github.com/JoshuaRileyDev/simulator-mcp-server) 📇 🏠 - 用於控制 iOS 模擬器的 MCP 伺服器
 - [@joshuarileydev/app-store-connect-mcp-server](https://github.com/JoshuaRileyDev/app-store-connect-mcp-server) 📇 🏠 - 一個 MCP 伺服器，用於與 iOS 開發者的 App Store Connect API 進行通信
@@ -431,6 +432,7 @@ Web 內容訪問和自動化功能。支援以 AI 友好格式搜尋、抓取和
 ### 🔒 <a name="security"></a>安全
 
 - [AIM-Intelligence/AIM-Guard-MCP](https://github.com/AIM-Intelligence/AIM-MCP) 📇 🏠 🍎 🪟 🐧 - 安全導向的 MCP 伺服器，為 AI 代理提供安全指導和內容分析。
+- [bx33661/Wireshark-MCP](https://github.com/bx33661/Wireshark-MCP) [glama](https://glama.ai/mcp/servers/bx33661/Wireshark-MCP) 🐍 🏠 - 具有抓包、協定統計、欄位提取和安全分析功能的 Wireshark 網路封包分析 MCP 伺服器。
 - [firstorderai/authenticator_mcp](https://github.com/firstorderai/authenticator_mcp) 📇 🏠 🍎 🪟 🐧 – 個安全的 MCP（Model Context Protocol）伺服器，使 AI 代理能與驗證器應用程式互動。
 - [dnstwist MCP Server](https://github.com/BurtTheCoder/mcp-dnstwist) 📇🪟☁️ - dnstwist 的 MCP 伺服器，這是一個強大的 DNS 模糊測試工具，可幫助檢測域名搶註、釣魚和企業竊密行為
 - [fosdickio/binary_ninja_mcp](https://github.com/Vector35/binaryninja-mcp) 🐍 🏠 🍎 🪟 🐧 - Binary Ninja 的 MCP 伺服器和橋接器。提供二進制分析和逆向工程工具。

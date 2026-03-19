@@ -288,6 +288,7 @@ Plataformas de dados para integração, transformação e orquestração de pipe
 Ferramentas e integrações que aprimoram o fluxo de trabalho de desenvolvimento e o gerenciamento de ambiente.
 
 - [JamesANZ/system-prompts-mcp-server](https://github.com/JamesANZ/system-prompts-mcp-server) 📇 🏠 🍎 🪟 🐧 - Publica um amplo catálogo de prompts de assistentes de código como ferramentas MCP, com recomendações sensíveis ao modelo e ativação de persona para simular agentes como Cursor ou Devin.
+- [Kapeli/dash-mcp-server](https://github.com/Kapeli/dash-mcp-server) [![Kapeli/dash-mcp-server MCP server](https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server) 🐍 🏠 🍎 - Servidor MCP para o [Dash](https://kapeli.com/dash), o navegador de documentação de APIs para macOS. Pesquisa instantânea em mais de 200 conjuntos de documentação.
 - [21st-dev/Magic-MCP](https://github.com/21st-dev/magic-mcp) - Crie componentes UI refinados inspirados pelos melhores engenheiros de design da 21st.dev.
 - [a-25/ios-mcp-code-quality-server](https://github.com/a-25/ios-mcp-code-quality-server) 📇 🏠 🍎 - Servidor de análise de qualidade de código iOS e automação de testes. Fornece execução abrangente de testes Xcode, integração SwiftLint e análise detalhada de falhas. Opera nos modos CLI e servidor MCP para uso direto por desenvolvedores e integração com assistentes de IA.
 - [Hypersequent/qasphere-mcp](https://github.com/Hypersequent/qasphere-mcp) 🎖️ 📇 ☁️ - Integração com o sistema de gerenciamento de testes [QA Sphere](https://qasphere.com/), permitindo que LLMs descubram, resumam e interajam com casos de teste diretamente de IDEs com IA
@@ -452,6 +453,7 @@ Acesse e analise dados de monitoramento de aplicações. Permite que modelos de 
 ### 🔒 <a name="segurança"></a>Segurança
 
 - [AIM-Intelligence/AIM-Guard-MCP](https://github.com/AIM-Intelligence/AIM-MCP) 📇 🏠 🍎 🪟 🐧 - Servidor MCP focado em segurança que oferece diretrizes de segurança e análise de conteúdo para agentes de IA.
+- [bx33661/Wireshark-MCP](https://github.com/bx33661/Wireshark-MCP) [glama](https://glama.ai/mcp/servers/bx33661/Wireshark-MCP) 🐍 🏠 - Servidor MCP para análise de pacotes de rede Wireshark com recursos de captura, estatísticas de protocolo, extração de campos e análise de segurança.
 - [firstorderai/authenticator_mcp](https://github.com/firstorderai/authenticator_mcp) 📇 🏠 🍎 🪟 🐧 – Um servidor MCP (Model Context Protocol) seguro que permite que agentes de IA interajam com o aplicativo autenticador.
 - [13bm/GhidraMCP](https://github.com/13bm/GhidraMCP) 🐍 ☕ 🏠 - Servidor MCP para integrar Ghidra com assistentes de IA. Este plugin permite análise binária, fornecendo ferramentas para inspeção de funções, descompilação, exploração de memória e análise de importação/exportação via Protocolo de Contexto de Modelo.
 - [atomicchonk/roadrecon_mcp_server](https://github.com/atomicchonk/roadrecon_mcp_server) 🐍 🪟 🏠 Servidor MCP para analisar resultados coletados do ROADrecon na enumeração de inquilino Azure
