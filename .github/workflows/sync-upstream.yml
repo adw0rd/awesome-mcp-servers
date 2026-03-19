@@ -35,8 +35,11 @@ jobs:
             echo "Upstream changes already merged"
             exit 0
           fi
-          git merge --no-commit --no-ff upstream/main
-          git restore --staged --worktree .github/workflows || true
+          # Allow merge conflicts (exit code 1) — we resolve them below
+          git merge --no-commit --no-ff upstream/main || true
+          # Remove any upstream workflow files and restore this fork's workflows
+          git rm -rf --ignore-unmatch .github/workflows
+          git checkout HEAD -- .github/workflows
           git commit --no-edit
 
       - name: Push changes
