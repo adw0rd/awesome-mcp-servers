@@ -42,5 +42,49 @@ jobs:
           git checkout HEAD -- .github/workflows
           git commit --no-edit
 
+      - name: Customize fork README
+        run: |
+          # Remove glama.ai promotional blocks from README.md
+          # 1. Remove Discord badge linking to glama.ai
+          sed -i '/\[!\[Discord\].*glama\.ai/d' README.md
+
+          # 2. Remove IMPORTANT blocks with glama.ai links (block = "> [!IMPORTANT]\n> ...\n")
+          # State of MCP report
+          sed -i '/^\[!IMPORTANT\]/{N;/glama\.ai\/blog/d}' README.md
+          # Awesome MCP Servers web directory
+          sed -i '/^\[!IMPORTANT\]/{N;/glama\.ai\/mcp\/servers/d}' README.md
+          # MCP Inspector
+          sed -i '/^\[!IMPORTANT\]/{N;/glama\.ai\/mcp\/inspector/d}' README.md
+          # Clean leftover "> " prefix lines (the > before [!IMPORTANT])
+          sed -i -n '/^> \[!IMPORTANT\]/{N;/glama\.ai/{d};P;D};p' README.md
+
+          # 3. Remove Glama Chat TIP block
+          sed -i '/^\[!TIP\]/{N;/Glama Chat/d}' README.md
+          sed -i -n '/^> \[!TIP\]/{N;/Glama Chat/{d};P;D};p' README.md
+
+          # 4. Remove "web-based directory" NOTE block
+          sed -i '/^\[!NOTE\]/{N;/web-based directory/d}' README.md
+          sed -i -n '/^> \[!NOTE\]/{N;/web-based directory/{d};P;D};p' README.md
+
+          # 5. Replace glama.ai client link with just awesome-mcp-clients
+          sed -i 's| and \[glama\.ai/mcp/clients\](https://glama\.ai/mcp/clients)||' README.md
+
+          # 6. Replace glama Discord link in Community section
+          sed -i 's|\[Discord Server\](https://glama\.ai/mcp/discord)|[Discord Server](https://discord.gg/mcp)|' README.md
+
+          # 7. Replace glama tutorial link
+          sed -i 's|\[Model Context Protocol (MCP) Quickstart\](https://glama\.ai/blog/2024-11-25-model-context-protocol-quickstart)|[Model Context Protocol (MCP) Quickstart](https://modelcontextprotocol.io/quickstart)|' README.md
+
+          # 8. Add awesome-mcp.tools link if not present
+          if ! grep -q 'awesome-mcp.tools' README.md; then
+            sed -i 's|^A curated list of awesome Model Context Protocol (MCP) servers\.|A curated list of awesome Model Context Protocol (MCP) servers — browse the full catalog at **[awesome-mcp.tools](https://awesome-mcp.tools)**.|' README.md
+          fi
+
+          # Commit only if there are changes
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "Customize fork: add awesome-mcp.tools link, clean competitor refs"
+          fi
+
       - name: Push changes
         run: git push origin HEAD:main
