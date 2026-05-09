@@ -40,6 +40,15 @@ jobs:
           # Remove any upstream workflow files and restore this fork's workflows
           git rm -rf --ignore-unmatch .github/workflows
           git checkout HEAD -- .github/workflows
+          # Resolve any remaining unmerged files (e.g. README.md) by taking upstream's version.
+          # Our README customizations are re-applied in the next step.
+          unmerged=$(git diff --name-only --diff-filter=U)
+          if [ -n "$unmerged" ]; then
+            echo "Auto-resolving unmerged files (take upstream):"
+            echo "$unmerged"
+            echo "$unmerged" | xargs git checkout --theirs --
+            echo "$unmerged" | xargs git add --
+          fi
           git commit --no-edit
 
       - name: Customize fork README
