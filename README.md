@@ -5,16 +5,11 @@
 [![日本語](https://img.shields.io/badge/日本語-クリック-青)](README-ja.md)
 [![한국어](https://img.shields.io/badge/한국어-클릭-yellow)](README-ko.md)
 [![Português Brasileiro](https://img.shields.io/badge/Português_Brasileiro-Clique-green)](README-pt_BR.md)
-[![Discord](https://img.shields.io/discord/1312302100125843476?logo=discord&label=discord)](https://glama.ai/mcp/discord)
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/mcp?style=flat&logo=reddit&label=subreddit)](https://www.reddit.com/r/mcp/)
 
-> [!IMPORTANT]
-> Read [The State of MCP in 2025](https://glama.ai/blog/2025-12-07-the-state-of-mcp-in-2025) report.
 
-> [!IMPORTANT]
-> [Awesome MCP Servers](https://glama.ai/mcp/servers) web directory.
 
-A curated list of awesome Model Context Protocol (MCP) servers.
+A curated list of awesome Model Context Protocol (MCP) servers — browse the full catalog at **[awesome-mcp.tools](https://awesome-mcp.tools)**.
 
 * [What is MCP?](#what-is-mcp)
 * [Clients](#clients)
@@ -31,17 +26,17 @@ A curated list of awesome Model Context Protocol (MCP) servers.
 
 ## Clients
 
-Checkout [awesome-mcp-clients](https://github.com/punkpeye/awesome-mcp-clients/) and [glama.ai/mcp/clients](https://glama.ai/mcp/clients).
+Checkout [awesome-mcp-clients](https://github.com/punkpeye/awesome-mcp-clients/).
 
 ## Tutorials
 
-* [Model Context Protocol (MCP) Quickstart](https://glama.ai/blog/2024-11-25-model-context-protocol-quickstart)
+* [Model Context Protocol (MCP) Quickstart](https://modelcontextprotocol.io/quickstart)
 * [Setup Claude Desktop App to Use a SQLite Database](https://youtu.be/wxCCzo9dGj0)
 
 ## Community
 
 * [r/mcp Reddit](https://www.reddit.com/r/mcp)
-* [Discord Server](https://glama.ai/mcp/discord)
+* [Discord Server](https://discord.gg/mcp)
 
 ## Legend
 
@@ -72,8 +67,6 @@ Checkout [awesome-mcp-clients](https://github.com/punkpeye/awesome-mcp-clients/)
 
 ## Server Implementations
 
-> [!NOTE]
-> We now have a [web-based directory](https://glama.ai/mcp/servers) that is synced with the repository.
 
 * 🔗 - [Aggregators](#aggregators)
 * 🎨 - [Art & Culture](#art-and-culture)
