@@ -1,0 +1,3 @@
+# The upstream sync workflow resolves README conflicts by taking upstream wholesale,
+# which silently drops entries added in this fork. A union merge keeps both sides.
+README.md merge=union
