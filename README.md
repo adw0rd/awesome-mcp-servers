@@ -34,7 +34,7 @@ Checkout [awesome-mcp-clients](https://github.com/punkpeye/awesome-mcp-clients/)
 
 ## Remote Servers
 
-This list is for servers with a GitHub repo you install and run yourself. Looking for a hosted server you just connect to over a URL? See [awesome-remote-mcp-servers](https://github.com/punkpeye/awesome-remote-mcp-servers).
+This catalog includes both locally installed and hosted MCP servers with public GitHub repositories. See the [submission requirements](CONTRIBUTING.md#scope) for endpoint verification and authentication details.
 
 ## Tutorials
 
@@ -1603,6 +1603,7 @@ Tools and integrations that enhance the development workflow and environment man
 - [skullzarmy/vibealive](https://github.com/skullzarmy/vibealive) 📇 🏠 🍎 🪟 🐧 — Full-featured utility to test Next.js projects for unused files and APIs, with an MCP server that exposes project analysis tools to AI assistants.
 - [smplkit/mcp](https://github.com/smplkit/mcp) [![smplkit/mcp MCP server](https://glama.ai/mcp/servers/smplkit/mcp/badges/score.svg)](https://glama.ai/mcp/servers/smplkit/mcp) 📇 ☁️ - Scheduled HTTP jobs from your AI agent — cron, one-off, or on-demand, with retries and run history.
 - [snaggle-ai/openapi-mcp-server](https://github.com/snaggle-ai/openapi-mcp-server) 🏎️ 🏠 - Connect any HTTP/REST API server using an Open API spec (v3)
+- [SnipperApp/snipper-mcp](https://github.com/SnipperApp/snipper-mcp) 🎖️ 🏠 🍎 - Search, read, create, and organize code snippets through SnipperApp 3's bundled stdio MCP server. Requires SnipperApp 3 (trial available) on macOS 15 or later; a .mcpb launcher is available for Claude Desktop.
 - [softvoyagers/linkshrink-api](https://github.com/softvoyagers/linkshrink-api) 📇 ☁️ - Free privacy-first URL shortener API with analytics and link management. No API key required.
 - [softvoyagers/ogforge-api](https://github.com/softvoyagers/ogforge-api) 📇 ☁️ - Free Open Graph image generator API with themes, Lucide icons, and custom layouts. No API key required.
 - [softvoyagers/pagedrop-api](https://github.com/softvoyagers/pagedrop-api) 📇 ☁️ - Free instant HTML hosting API with paste, file upload, and ZIP deploy support. No API key required.
