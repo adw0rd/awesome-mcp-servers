@@ -42,16 +42,16 @@ jobs:
 
       - name: Merge upstream changes
         run: |
-          # Merge upstream, but keep this fork's workflow files unchanged.
+          # Merge upstream while preserving this fork's workflows and curation rules.
           if git merge-base --is-ancestor upstream/main HEAD; then
             echo "Upstream changes already merged"
             exit 0
           fi
           # Allow merge conflicts (exit code 1) — we resolve them below
           git merge --no-commit --no-ff upstream/main || true
-          # Remove any upstream workflow files and restore this fork's workflows
+          # Remove upstream workflows and restore this fork's protected files
           git rm -rf --ignore-unmatch .github/workflows
-          git checkout HEAD -- .github/workflows .github/scripts/strip-commit-metadata.py AGENTS.md CLAUDE.md .claude/settings.json
+          git checkout HEAD -- .github/workflows .github/scripts/strip-commit-metadata.py AGENTS.md CLAUDE.md .claude/settings.json CONTRIBUTING.md
           # Resolve any remaining unmerged files (e.g. README.md) by taking upstream's version.
           # Our README customizations are re-applied in the next step.
           unmerged=$(git diff --name-only --diff-filter=U)
@@ -100,6 +100,15 @@ jobs:
           if ! grep -q 'awesome-mcp.tools' README.md; then
             sed -i 's|^A curated list of awesome Model Context Protocol (MCP) servers\.|A curated list of awesome Model Context Protocol (MCP) servers — browse the full catalog at **[awesome-mcp.tools](https://awesome-mcp.tools)**.|' README.md
           fi
+
+          # 9. Keep the fork's local-and-hosted scope after upstream union merges.
+          python3 - <<'PYSCOPE'
+          from pathlib import Path
+          import re
+          path = Path("README.md")
+          scope = "## Remote Servers\n\nThis catalog includes both locally installed and hosted MCP servers with public GitHub repositories. See the [submission requirements](CONTRIBUTING.md#scope) for endpoint verification and authentication details.\n\n"
+          path.write_text(re.sub(r"(?ms)^## Remote Servers\n.*?(?=^## |\Z)", lambda _: scope, path.read_text(), count=1))
+          PYSCOPE
 
           # Commit only if there are changes
           if ! git diff --quiet README.md; then
