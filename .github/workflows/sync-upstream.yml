@@ -28,6 +28,18 @@ jobs:
           git remote add upstream https://github.com/punkpeye/awesome-mcp-servers.git || true
           git fetch upstream main
 
+      - name: Sanitize upstream commit metadata
+        run: |
+          python3 -m pip install --disable-pip-version-check git-filter-repo==2.47.0
+          # Use the same transformation as the fork's history cleanup so
+          # merge bases match and upstream trailers cannot return.
+          git filter-repo --force \
+            --refs refs/remotes/upstream/main \
+            --preserve-commit-hashes --preserve-commit-encoding \
+            --prune-empty never --prune-degenerate never \
+            --replace-refs delete-no-add \
+            --message-callback .github/scripts/strip-commit-metadata.py
+
       - name: Merge upstream changes
         run: |
           # Merge upstream, but keep this fork's workflow files unchanged.
@@ -39,7 +51,7 @@ jobs:
           git merge --no-commit --no-ff upstream/main || true
           # Remove any upstream workflow files and restore this fork's workflows
           git rm -rf --ignore-unmatch .github/workflows
-          git checkout HEAD -- .github/workflows
+          git checkout HEAD -- .github/workflows .github/scripts/strip-commit-metadata.py AGENTS.md CLAUDE.md .claude/settings.json
           # Resolve any remaining unmerged files (e.g. README.md) by taking upstream's version.
           # Our README customizations are re-applied in the next step.
           unmerged=$(git diff --name-only --diff-filter=U)
@@ -94,6 +106,17 @@ jobs:
             git add README.md
             git commit -m "Customize fork: add awesome-mcp.tools link, clean competitor refs"
           fi
+
+      - name: Verify commit metadata
+        run: |
+          python3 - <<'PYVERIFY'
+          import re
+          import subprocess
+          messages = subprocess.check_output(["git", "log", "HEAD", "--format=%B"])
+          forbidden = br"(?im)^[ \t]*(?:Co-Authored-By|Claude-Session)[ \t]*:|https?://claude\.ai/(?:code/)?session"
+          if re.search(forbidden, messages):
+              raise SystemExit("Forbidden commit metadata found; refusing to push")
+          PYVERIFY
 
       - name: Push changes
         run: git push origin HEAD:main
