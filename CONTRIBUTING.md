@@ -10,6 +10,14 @@ A submission must provide a working MCP interface. For a local server, include r
 
 Descriptions must disclose required applications, operating systems, accounts, and paid plans when applicable. Distinguish the license of a public launcher or documentation repository from the license of the server or companion application. Avoid unverified performance or quality claims.
 
+## Badge (optional)
+
+Once a server is listed, its authors may add a badge to their README. It is entirely optional and has no effect on whether a submission is accepted or kept. Replace `<slug>` with the slug from the server's catalog URL (`https://awesome-mcp.tools/server/<slug>`):
+
+```markdown
+[![Listed on awesome-mcp.tools](https://awesome-mcp.tools/badge/<slug>.svg)](https://awesome-mcp.tools/server/<slug>)
+```
+
 ## How to Contribute
 
 1. **Fork the repository:** Click the "Fork" button in the top right corner of the GitHub page.
