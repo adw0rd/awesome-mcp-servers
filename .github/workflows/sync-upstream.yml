@@ -40,6 +40,12 @@ jobs:
             --replace-refs delete-no-add \
             --message-callback .github/scripts/strip-commit-metadata.py
 
+      - name: Capture fork catalog entries
+        run: |
+          # Run the fork's trusted guard even if upstream changes its script.
+          cp .github/scripts/sync_guard.py "$RUNNER_TEMP/sync_guard.py"
+          python3 "$RUNNER_TEMP/sync_guard.py" capture --output "$RUNNER_TEMP/fork-catalog.json"
+
       - name: Merge upstream changes
         run: |
           # Merge upstream while preserving this fork's workflows and curation rules.
@@ -47,20 +53,24 @@ jobs:
             echo "Upstream changes already merged"
             exit 0
           fi
-          # Allow merge conflicts (exit code 1) — we resolve them below
-          git merge --no-commit --no-ff upstream/main || true
+          # Only content conflicts (exit code 1) may reach conflict handling.
+          if git merge --no-commit --no-ff upstream/main; then
+            :
+          else
+            merge_status=$?
+            if [ "$merge_status" -ne 1 ]; then
+              exit "$merge_status"
+            fi
+          fi
+          python3 "$RUNNER_TEMP/sync_guard.py" check-conflicts
           # Remove upstream workflows and restore this fork's protected files
           git rm -rf --ignore-unmatch .github/workflows
-          git checkout HEAD -- .github/workflows .github/scripts/strip-commit-metadata.py AGENTS.md CLAUDE.md .claude/settings.json CONTRIBUTING.md
-          # Resolve any remaining unmerged files (e.g. README.md) by taking upstream's version.
-          # Our README customizations are re-applied in the next step.
-          unmerged=$(git diff --name-only --diff-filter=U)
-          if [ -n "$unmerged" ]; then
-            echo "Auto-resolving unmerged files (take upstream):"
-            echo "$unmerged"
-            echo "$unmerged" | xargs git checkout --theirs --
-            echo "$unmerged" | xargs git add --
-          fi
+          git checkout HEAD -- .github/workflows .github/scripts AGENTS.md CLAUDE.md .claude/settings.json CONTRIBUTING.md .gitattributes
+          # README conflicts have already stopped this job. Resolve other paths safely.
+          while IFS= read -r -d '' path; do
+            git checkout --theirs -- "$path"
+            git add -- "$path"
+          done < <(git diff --name-only --diff-filter=U -z)
           git commit --no-edit
 
       - name: Customize fork README
@@ -115,6 +125,9 @@ jobs:
             git add README.md
             git commit -m "Customize fork: add awesome-mcp.tools link, clean competitor refs"
           fi
+
+      - name: Verify fork catalog preservation
+        run: python3 "$RUNNER_TEMP/sync_guard.py" verify --snapshot "$RUNNER_TEMP/fork-catalog.json"
 
       - name: Verify commit metadata
         run: |

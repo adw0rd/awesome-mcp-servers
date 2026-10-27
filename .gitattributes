@@ -1,3 +1,2 @@
-# The upstream sync workflow resolves README conflicts by taking upstream wholesale,
-# which silently drops entries added in this fork. A union merge keeps both sides.
+# Keep both sides of README content conflicts; sync_guard.py also checks preservation.
 README.md merge=union

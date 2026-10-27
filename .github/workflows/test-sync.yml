@@ -1,0 +1,30 @@
+name: Test upstream sync protection
+
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/**'
+      - '.github/workflows/sync-upstream.yml'
+      - '.github/workflows/test-sync.yml'
+      - '.gitattributes'
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/**'
+      - '.github/workflows/sync-upstream.yml'
+      - '.github/workflows/test-sync.yml'
+      - '.gitattributes'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -B -m unittest discover -s .github/scripts/tests -p 'test_sync_guard.py' -v

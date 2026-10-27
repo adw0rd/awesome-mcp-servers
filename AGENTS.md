@@ -11,6 +11,8 @@
 
 - Sanitize upstream commit messages with `.github/scripts/strip-commit-metadata.py` before merging. Keep the pinned filter version and all history-preservation flags in `sync-upstream.yml`; they preserve a common ancestry with this cleaned fork.
 - Preserve this fork's agent instructions, Claude settings, sanitizer, workflows, and `CONTRIBUTING.md` during upstream merges.
+- Preserve `.gitattributes` and `.github/scripts/sync_guard.py`. Sync captures repositories added since the upstream merge base and refuses to publish if one disappears, README remains conflicted, or its `merge=union` rule is lost. Entries shared with the merge base may still follow upstream removals.
+- Run `python3 -B -m unittest discover -s .github/scripts/tests -p 'test_sync_guard.py' -v` after changing synchronization guards or the workflow.
 
 ## Catalog submissions
 
