@@ -20,6 +20,15 @@ def catalog(*repositories):
     )
 
 
+def entry(path, text="Example server."):
+    return f"- [{path}](https://github.com/{path}) - {text}\n"
+
+
+def sections(*blocks):
+    return "## Server Implementations\n" + "".join(
+        f"\n### {name}\n\n" + "".join(entries) for name, entries in blocks)
+
+
 def merge_script():
     lines = WORKFLOW.read_text().splitlines()
     start = lines.index("      - name: Merge upstream changes") + 2
@@ -180,6 +189,88 @@ class SyncGuardTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("upstream", result.stderr.lower())
 
+
+    def history(self, base, upstream, fork):
+        def commit(content, message):
+            self.write("README.md", content)
+            self.git("add", ".")
+            self.git("commit", "-q", "--allow-empty", "-m", message)
+        commit(base, "Base catalog")
+        self.git("checkout", "-q", "-b", "upstream-branch")
+        commit(upstream, "Upstream catalog change")
+        self.git("update-ref", "refs/remotes/upstream/main", "HEAD")
+        self.git("checkout", "-q", "main")
+        commit(fork, "Fork catalog change")
+
+    def run_merge(self):
+        result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", merge_script()],
+                                cwd=self.repo, env=self.env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return (self.repo / "README.md").read_text()
+
+    def dedupe(self, readme):
+        self.write("README.md", readme)
+        result = self.guard("dedupe")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return (self.repo / "README.md").read_text()
+
+    def test_union_merge_keeps_one_current_copy_of_an_updated_entry(self):
+        old, new = entry("shared/base"), entry("shared/base", "Updated description.")
+        self.history(sections(("Tools", [old])), sections(("Tools", [new])),
+                     sections(("Tools", [old, entry("fork/local")])))
+        snapshot = self.capture()
+        readme = self.run_merge()
+        self.assertEqual(readme.count("](https://github.com/shared/base)"), 1, readme)
+        self.assertIn(new, readme)
+        self.assertIn(entry("fork/local"), readme)
+        self.assertEqual(self.guard("verify", "--snapshot", snapshot).returncode, 0)
+
+    def test_union_merge_keeps_the_fork_correction_of_an_upstream_entry(self):
+        fixed = entry("shared/base", "Fork correction with access disclosure.")
+        self.history(sections(("Tools", [entry("shared/base")])),
+                     sections(("Tools", [entry("shared/base", "Updated description.")])),
+                     sections(("Tools", [fixed])))
+        readme = self.run_merge()
+        self.assertEqual(readme.count("](https://github.com/shared/base)"), 1, readme)
+        self.assertIn(fixed, readme)
+
+    def test_dedupe_keeps_an_entry_in_its_upstream_category(self):
+        moved = entry("moved/entry")
+        self.history(sections(("Alpha", [moved]), ("Beta", [])),
+                     sections(("Alpha", []), ("Beta", [moved])),
+                     sections(("Alpha", [moved, entry("fork/local")]), ("Beta", [])))
+        readme = self.dedupe(sections(("Alpha", [moved, entry("fork/local")]), ("Beta", [moved])))
+        self.assertEqual(readme, sections(("Alpha", [entry("fork/local")]), ("Beta", [moved])))
+
+    def test_dedupe_preserves_entries_upstream_lists_twice(self):
+        twice = entry("listed/twice")
+        both = sections(("Alpha", [twice]), ("Beta", [twice]))
+        self.history(both, both, sections(("Alpha", [twice, entry("fork/local")]), ("Beta", [twice])))
+        readme = self.dedupe(sections(("Alpha", [twice, entry("fork/local"), twice]), ("Beta", [twice])))
+        self.assertEqual(readme, sections(("Alpha", [twice, entry("fork/local")]), ("Beta", [twice])))
+
+    def test_dedupe_merges_a_duplicated_category_heading(self):
+        upstream = sections(("Alpha", [entry("a/one")]), ("Tools", [entry("t/one")]), ("Zeta", []))
+        self.history(upstream, upstream, upstream)
+        readme = self.dedupe(sections(("Alpha", [entry("a/one")]), ("Tools", [entry("t/one")]),
+                                      ("Tools", [entry("fork/local")]), ("Zeta", [])))
+        self.assertEqual(readme.count("### Tools"), 1, readme)
+        self.assertEqual(readme, sections(("Alpha", [entry("a/one")]),
+                                          ("Tools", [entry("t/one"), entry("fork/local")]), ("Zeta", [])))
+
+    def test_dedupe_keeps_one_copy_of_a_repeated_fork_entry(self):
+        upstream = sections(("Tools", [entry("shared/base")]))
+        self.history(upstream, upstream, upstream)
+        readme = self.dedupe(sections(("Tools", [entry("fork/local"), entry("shared/base"),
+                                                 entry("fork/local")])))
+        self.assertEqual(readme, sections(("Tools", [entry("fork/local"), entry("shared/base")])))
+
+    def test_dedupe_leaves_a_clean_catalog_and_monorepo_subpaths_unchanged(self):
+        servers = [entry("org/servers/tree/main/src/a"), entry("org/servers/tree/main/src/b")]
+        clean = sections(("Tools", servers + [entry("fork/local")]))
+        self.history(sections(("Tools", servers)), sections(("Tools", servers)), clean)
+        self.assertEqual(self.dedupe(clean), clean)
+        self.assertEqual(self.dedupe(clean), clean)
 
 if __name__ == "__main__":
     unittest.main()

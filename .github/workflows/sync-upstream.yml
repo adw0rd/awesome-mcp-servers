@@ -71,6 +71,9 @@ jobs:
             git checkout --theirs -- "$path"
             git add -- "$path"
           done < <(git diff --name-only --diff-filter=U -z)
+          # Union merges keep both sides of a README hunk; drop the stale copies.
+          python3 "$RUNNER_TEMP/sync_guard.py" dedupe
+          git add README.md
           git commit --no-edit
 
       - name: Customize fork README
