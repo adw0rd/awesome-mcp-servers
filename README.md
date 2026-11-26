@@ -1500,6 +1500,7 @@ Secure database access with schema inspection capabilities. Enables querying and
 - [wenb1n-dev/mysql_mcp_server_pro](https://github.com/wenb1n-dev/mysql_mcp_server_pro) 🐍 🏠 - MySQL CRUD plus database anomaly analysis and role-based permission control, with easily extensible custom tools.
 - [wenb1n-dev/SmartDB_MCP](https://github.com/wenb1n-dev/SmartDB_MCP) 🐍 🏠 - Connect to multiple databases at once (MySQL, PostgreSQL, SQL Server, MariaDB, Dameng, Oracle) for operations, health analysis and SQL optimization.
 - [wenerme/wener-mssql-mcp](https://github.com/wenerme/wode/tree/develop/packages/wener-mssql-mcp) 📇 🏠 - MSSQL database integration with schema inspection and query capabilities.
+- [WoWSQL/MCP-Server](https://github.com/WoWSQL/MCP-Server) 📇 ☁️ - Streamable HTTP connector for WoWSQL managed PostgreSQL projects, table inspection, SQL reads and writes, and documentation search. The hosted endpoint `https://mcp.wowsql.com/mcp` uses WoWSQL OAuth. The connector can also be built and run from source.
 - [xexr/mcp-libsql](https://github.com/Xexr/mcp-libsql) 📇 🏠 ☁️ - Security and management tools for libSQL databases.
 - [XGenerationLab/xiyan_mcp_server](https://github.com/XGenerationLab/xiyan_mcp_server) 📇 ☁️ - Fetch data from databases with natural-language queries, using XiyanSQL as the text-to-SQL model.
 - [xing5/mcp-google-sheets](https://github.com/xing5/mcp-google-sheets) 🐍 ☁️ - Create, read, update and manage spreadsheets through the Google Sheets API.
@@ -4639,6 +4640,7 @@ Tools for conducting research, surveys, interviews, and data collection.
 MCP servers for job search and career platforms.
 
 - [GhoshSrinjoy/linkedin-job-mcp](https://github.com/GhoshSrinjoy/linkedin-job-mcp) [![GhoshSrinjoy/linkedin-job-mcp MCP server](https://glama.ai/mcp/servers/GhoshSrinjoy/linkedin-job-mcp/badges/score.svg)](https://glama.ai/mcp/servers/GhoshSrinjoy/linkedin-job-mcp) 📇 🏠 🍎 🪟 🐧 - Job search by keyword and location with date, job type, remote, salary and experience filters, full job details, and a local dashboard that grades postings for ghost-job risk. Reads public job pages, so no account or browser is needed.
+- [kasovy/neverapply-mcp](https://github.com/kasovy/neverapply-mcp) ☁️ - Hosted Streamable HTTP at `https://neverapply.co/mcp` for job search, matches and application tracking. Guests can search and read listings. Account tools use OAuth, and submitting an application requires job-specific approval and credits. Resume tailoring and interview preparation require paid access.
 - [MIt9/workatastartup-mcp](https://github.com/MIt9/workatastartup-mcp) [![MIt9/workatastartup-mcp MCP server](https://glama.ai/mcp/servers/MIt9/workatastartup-mcp/badges/score.svg)](https://glama.ai/mcp/servers/MIt9/workatastartup-mcp) 🐍 🏠 - MCP server for WorkAtAStartup — search startup job listings via Claude or Cursor.
 
 ### 🔒 <a name="security"></a>Security
